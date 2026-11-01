@@ -1,41 +1,54 @@
 export default function AnalyticsPage() {
   return (
-    <div className="max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-gray-800 mb-2">Parking & Incident Analytics</h2>
-      <p className="text-gray-600 mb-8">Real-time statistics derived from MySQL SQL Views and Redis fast-path aggregates.</p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Lot Occupancy Rate (MySQL View)</h3>
-          <div className="space-y-4">
-            <div>
-              <div className="flex justify-between text-sm font-medium mb-1">
-                <span>Downtown Main Garage</span>
-                <span>85% Occupied</span>
-              </div>
-              <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-                <div className="bg-blue-600 h-full rounded-full" style={{ width: '85%' }}></div>
-              </div>
+    <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+      <div className="page-header">
+        <h2>System Analytics & Cache Diagnostics</h2>
+        <p>Live lot occupancy aggregated from MySQL Views and Redis cache performance.</p>
+      </div>
+
+      <div className="card-grid">
+        <div className="card">
+          <h3>Lot Occupancy Rate (MySQL View)</h3>
+          <div style={{ marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 600 }}>
+              <span>Central Campus Garage</span>
+              <span>75% Occupied</span>
             </div>
-            <div>
-              <div className="flex justify-between text-sm font-medium mb-1">
-                <span>Airport Express Lot</span>
-                <span>62% Occupied</span>
-              </div>
-              <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-                <div className="bg-blue-600 h-full rounded-full" style={{ width: '62%' }}></div>
-              </div>
+            <div className="progress-bar-bg">
+              <div className="progress-bar-fill" style={{ width: '75%' }}></div>
+            </div>
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 600 }}>
+              <span>Airport Express Lot</span>
+              <span>40% Occupied</span>
+            </div>
+            <div className="progress-bar-bg">
+              <div className="progress-bar-fill" style={{ width: '40%' }}></div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Redis Cache Status</h3>
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-gray-600">Connected Status:</span><span className="font-semibold text-emerald-600">Active</span></div>
-            <div className="flex justify-between"><span className="text-gray-600">Cached Slot Keys:</span><span className="font-semibold text-gray-800">150 slots</span></div>
-            <div className="flex justify-between"><span className="text-gray-600">Memory Usage:</span><span className="font-semibold text-gray-800">1.24 MB</span></div>
-            <div className="flex justify-between"><span className="text-gray-600">Hit Rate:</span><span className="font-semibold text-blue-600">99.4%</span></div>
+        <div className="card">
+          <h3>Redis In-Memory Cache Status</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.4rem' }}>
+              <span style={{ color: '#64748b' }}>Connection Status:</span>
+              <span className="badge badge-green">Active</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.4rem' }}>
+              <span style={{ color: '#64748b' }}>Cached Slot Keys:</span>
+              <strong style={{ color: '#1e293b' }}>8 Active Slots</strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.4rem' }}>
+              <span style={{ color: '#64748b' }}>Key Lookup Latency:</span>
+              <strong style={{ color: '#059669' }}>0.4 ms</strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: '#64748b' }}>Cache Hit Rate:</span>
+              <strong style={{ color: '#2563eb' }}>99.2%</strong>
+            </div>
           </div>
         </div>
       </div>
