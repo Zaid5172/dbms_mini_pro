@@ -1,0 +1,9 @@
+{
+  "name": "Parkwise — MySQL + Redis",
+  "dockerComposeFile": ["../compose.yaml", "compose.yaml"],
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/parking",
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm ci",
+  "remoteUser": "node"
+}

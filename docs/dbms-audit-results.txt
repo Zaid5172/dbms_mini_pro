@@ -1,0 +1,60 @@
+Schema and demo users created. No passwords printed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> smart-parking-incident-system@1.0.0 db:migrate
+> node --env-file=.env.local scripts/migrate-db.cjs
+
+Database fixes applied. Existing users, bookings and payments were preserved.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> smart-parking-incident-system@1.0.0 db:migrate
+> node --env-file=.env.local scripts/migrate-db.cjs
+
+Database fixes applied. Existing users, bookings and payments were preserved.
+PASS migration from previous schema, repeat migration and preserved users.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> smart-parking-incident-system@1.0.0 db:init
+> node --env-file=.env.local scripts/init-db.cjs
+
+Schema and demo users created. No passwords printed.
+PASS fresh schema initialization.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> smart-parking-incident-system@1.0.0 test
+> node --env-file-if-exists=.env.local --test tests/*.test.cjs
+
+▶ DBMS edge cases and transaction rollback
+  ✔ reject malformed JSON objects, boolean IDs and cross-origin writes (35.64907ms)
+  ✔ one vehicle cannot hold two simultaneous spaces (40.38893ms)
+  ✔ database rejects booking for someone else’s vehicle (18.185147ms)
+  ✔ payment failure rolls back checkout, slot trigger and status (24.504915ms)
+  ✔ 90 minute fee, simultaneous checkout, unique payment and released slot (14.437619ms)
+  ✔ cancellation has zero SQL fee and no payment (16.818451ms)
+  ✔ foreign key and CHECK constraints reject invalid records (3.112262ms)
+  ✔ whitespace cannot bypass the shared login rate limit (750.677472ms)
+  ✔ empty lots appear with zero occupancy (5.794307ms)
+✔ DBMS edge cases and transaction rollback (1326.723531ms)
+✔ real database integration: roles, race, fees, trigger, incidents, logout (510.52663ms)
+✔ salted scrypt accepts correct passwords and rejects wrong passwords (225.041686ms)
+✔ session tokens are stored as hashes and identifiers reject injection (0.798651ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1509.30313
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> smart-parking-incident-system@1.0.0 db:audit
+> node --env-file=.env.local scripts/audit-db.cjs
+
+PASS slot state vs active bookings
+PASS booking vehicle ownership
+PASS completed fee and payment
+PASS unexpected payments or cancellation fees
+PASS booking lifecycle timestamps
+PASS lot capacity vs slots
+AUDIT RUN COMPLETE; database default timezone +05:30.

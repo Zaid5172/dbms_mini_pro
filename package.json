@@ -4,22 +4,25 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "next build --webpack",
+    "start": "next start",
+    "db:init": "node --env-file=.env.local scripts/init-db.cjs",
+    "test": "node --env-file-if-exists=.env.local --test tests/*.test.cjs",
+    "check": "node scripts/check-source.cjs",
+    "test:browser": "node --env-file=.env.local scripts/browser-test.cjs",
+    "local": "node scripts/start-local.cjs",
+    "db:audit": "node --env-file=.env.local scripts/audit-db.cjs",
+    "db:migrate": "node --env-file=.env.local scripts/migrate-db.cjs"
   },
   "dependencies": {
-    "cookie": "^2.0.1",
     "dotenv": "^16.4.5",
-    "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.11.0",
-    "next": "14.2.5",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "next": "16.4.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "redis": "^4.7.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.6.2",
-    "postcss": "^8.5.32",
-    "tailwindcss": "^4.3.3"
+    "playwright": "^1.62.1"
   }
 }

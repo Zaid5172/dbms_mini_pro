@@ -1,0 +1,14 @@
+services:
+  workspace:
+    image: mcr.microsoft.com/devcontainers/javascript-node:24-bookworm
+    volumes:
+      - ..:/workspaces/parking:cached
+    command: sleep infinity
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql
+      REDIS_URL: redis://redis:6379

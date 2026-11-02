@@ -1,0 +1,53 @@
+name: Validate Parkwise
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci-root-only
+          MYSQL_DATABASE: smart_parking_db
+          MYSQL_USER: parking
+          MYSQL_PASSWORD: ci-parking-only
+        ports: [3306:3306]
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=5s --health-timeout=3s --health-retries=30
+      redis:
+        image: redis:7.4-alpine
+        ports: [6379:6379]
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=5s --health-timeout=3s --health-retries=15
+    env:
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_PORT: 3306
+      MYSQL_USER: parking
+      MYSQL_PASSWORD: ci-parking-only
+      MYSQL_DATABASE: smart_parking_db
+      REDIS_URL: redis://127.0.0.1:6379
+      SEED_CUSTOMER_PASSWORD: ci-customer-only
+      SEED_STAFF_PASSWORD: ci-staff-only
+      COOKIE_SECURE: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Permit database routines for the test user
+        run: mysql -h 127.0.0.1 -uroot -pci-root-only -e 'SET GLOBAL log_bin_trust_function_creators=1;'
+      - run: cp .env.example .env.local
+      - run: npm run db:init
+      - run: npm run build
+      - name: Run API integration and unit tests
+        run: |
+          npm start > /tmp/parking-next.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:3000/api/health; then break; fi
+            sleep 1
+          done
+          RUN_INTEGRATION=1 npm test

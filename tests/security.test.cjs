@@ -1,0 +1,4 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');
+const {hashPassword,verifyPassword,digest,positiveId}=require('../src/lib/security.cjs');
+test('salted scrypt accepts correct passwords and rejects wrong passwords',()=>{const a=hashPassword('correct horse battery');const b=hashPassword('correct horse battery');assert.notEqual(a,b);assert.equal(verifyPassword('correct horse battery',a),true);assert.equal(verifyPassword('wrong',a),false);assert.equal(verifyPassword('x','invalid'),false);});
+test('session tokens are stored as hashes and identifiers reject injection',()=>{assert.equal(digest('token').length,64);assert.notEqual(digest('token'),'token');for(const id of [0,-1,1.5,'1 OR 1=1',null,true,false,[1],{},'1.0','1e0',' 1 '])assert.equal(positiveId(id),false);assert.equal(positiveId(1),true);});
