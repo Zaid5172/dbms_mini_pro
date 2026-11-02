@@ -17,13 +17,14 @@ export default function RootLayout({ children }) {
               <a href="/parking">Parking Slots</a>
               <a href="/incidents">Incidents</a>
               <a href="/analytics">Analytics</a>
+              <a href="/profile">Profile</a>
+              <a href="/login">Login</a>
             </nav>
           </div>
         </header>
         <main>{children}</main>
-        <footer>
-          DBMS Level 3 Project — MySQL & Redis Architecture
-        </footer>
+       
+        
       </body>
     </html>
   );
